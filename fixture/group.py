@@ -22,14 +22,17 @@ class GroupHelper:
 
     def del_group(self):
         self.open_group_editor()
-        self.get_group_list()[1].click()
+        tree = self.group_editor.window(auto_id="uxAddressTreeView")
+        root = tree.tree_root()
+        root.children()[1].select()
         self.group_editor.window(auto_id="uxDeleteAddressButton").click()
-        self.group_editor.window(auto_id="uxOKAddressButton").click()
+        self.delete_group = self.app.application.window(title="Delete group")
+        self.delete_group.window(auto_id="uxOKAddressButton").click()
 
     def open_group_editor(self):
         self.app.main_window.window(auto_id="groupButton").click()
         self.group_editor = self.app.application.window(title="Group editor")
-        self.group_editor.wait("visible")
+        self.group_editor.wait("visible", 1000)
 
     def close_group_editor(self):
         self.group_editor.close()
